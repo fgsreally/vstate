@@ -18,6 +18,7 @@ jobs:
         with:
           node-version: 16
           cache: 'pnpm'
+          version: 7
 
       - run: pnpm install
 
@@ -37,6 +38,7 @@ jobs:
         with:
           node-version: 16
           cache: 'pnpm'
+          version: 7
 
       - run: pnpm install
 
