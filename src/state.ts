@@ -29,7 +29,7 @@ export class vState<C, E extends string, S extends string> {
   eventList: eventListType<E>;
   ctx: C;
 
-  constructor(state: vStateInit<C, S>, options: vStateParams<C, E>={}) {
+  constructor(state: vStateInit<C, S>, options: vStateParams<C, E> = {}) {
     this.actions = options.actions;
     this.guards = options.guards;
     this.activities = options.activities;
@@ -224,7 +224,7 @@ export class vState<C, E extends string, S extends string> {
     }
     console.log(`clear ${name} timer`);
 
-    this.cacheTimer[name].forEach((i: NodeJS.Timeout) => {
+    this.cacheTimer[name].forEach((i: number) => {
       clearTimeout(i);
     });
     this.cacheTimer[name] = undefined;
@@ -236,7 +236,7 @@ export class vState<C, E extends string, S extends string> {
     }
 
     this.cacheTimer[name] = [];
-    console.log('after',state.after)
+    console.log("after", state.after);
     for (let i in state.after) {
       this.cacheTimer[name].push(
         setTimeout(() => {
