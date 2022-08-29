@@ -17,26 +17,39 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Install
         uses: actions/setup-node@v3
-        with:
+        with:   
+          version: 7
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
           cache: pnpm
-
-      - run: pnpm install
-      - run: pnpm run test:unit
+      - name: Test
+      - run: pnpm run test
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v2.0.1
+        name: Install 
         with:
+          version: 7
+          
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm i
+          cache: pnpm
+
+       name: build
       - run: npm run build
-      - run: npm publish --access=public
+       name: publish
+      - run: npm  publish 
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
